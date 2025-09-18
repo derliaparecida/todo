@@ -1,8 +1,22 @@
-# CMakeLists.txt para o projeto TODO
 cmake_minimum_required(VERSION 3.10)
-project(TODO)
-set(CMAKE_CXX_STANDARD 17)
+project(TodoApp)
 
-include_directories(src)
-file(GLOB SOURCES "src/*.cpp" "src/models/*.cpp" "src/controllers/*.cpp" "src/views/*.cpp" "src/utils/*.cpp")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Adiciona os arquivos fonte
+set(SOURCES
+    src/main.cpp
+    src/models/Usuario.cpp
+    src/utils/Database.cpp
+)
+
+# Cria o executável
 add_executable(todo ${SOURCES})
+
+# Linka com a biblioteca SQLite
+find_package(SQLite3 REQUIRED)
+if(SQLite3_FOUND)
+    target_include_directories(todo PRIVATE ${SQLite3_INCLUDE_DIRS})
+    target_link_libraries(todo PRIVATE ${SQLite3_LIBRARIES})
+endif()
