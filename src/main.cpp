@@ -1,5 +1,6 @@
 #include <iostream>
 #include "models/Usuario.hpp"
+#include "controllers/UsuarioController.hpp"
 #include "utils/Database.hpp"
 
 int main()
@@ -14,7 +15,7 @@ int main()
 
     // Cria a tabela se não existir
     std::string sql = "CREATE TABLE IF NOT EXISTS usuarios ("
-                      "id TEXT PRIMARY KEY, "
+                      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                       "nome TEXT NOT NULL, "
                       "senha TEXT NOT NULL, "
                       "email TEXT NOT NULL);";
@@ -24,18 +25,14 @@ int main()
         return 1;
     }
 
-    // Cria um usuário
-    Usuario u("1", "ana", "1234", "ana@email.com");
+    // Instancia o controller de usuário
+    UsuarioController usuarioController;
 
-    // Salva o usuário
-    if (u.salvar(db))
-    {
-        std::cout << "Usuário salvo com sucesso!" << std::endl;
-    }
-    else
-    {
-        std::cerr << "Falha ao salvar usuário." << std::endl;
-    }
+    // Cadastro de usuário
+    usuarioController.cadastrarUsuario(db, "bb", "1234", "bb@email.com");
+
+    // TODO: Login de usuário
+    usuarioController.loginUsuario(db, "bb@email.com", "1234");
 
     db.close();
     return 0;

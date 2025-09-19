@@ -23,7 +23,10 @@ Este projeto implementa um software de gestão de tarefas com técnica Pomodoro,
 
 - Criar pasta `build` na raiz do projeto:
 - mkdir build
-- ./build/todo
+- cd build
+- cmake ..
+- make
+- ./todo
 
 ### Compilação e execução usando VSCode
 
