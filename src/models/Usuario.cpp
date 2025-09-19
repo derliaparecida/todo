@@ -1,11 +1,14 @@
 #include "Usuario.hpp"
 #include <iostream>
 
-Usuario::Usuario(const std::string &id, const std::string &nome, const std::string &senha, const std::string &email)
-    : id(id), nome(nome), senha(senha), email(email) {}
+// Construtor
+Usuario::Usuario(const std::string &nome,
+                 const std::string &senha,
+                 const std::string &email)
+    : nome(nome), senha(senha), email(email) {}
 
+// Getters
 std::string Usuario::getNome() const { return nome; }
-
 std::string Usuario::getEmail() const { return email; }
 
 bool Usuario::autenticar(const std::string &senhaDigitada) const
@@ -13,6 +16,7 @@ bool Usuario::autenticar(const std::string &senhaDigitada) const
     return senha == senhaDigitada;
 }
 
+// Cadastra usuário no banco
 bool Usuario::salvar(Database &db)
 {
     sqlite3 *conn = db.getDB();
@@ -22,22 +26,19 @@ bool Usuario::salvar(Database &db)
         return false;
     }
 
-    const char *sql = "INSERT INTO usuarios (id, nome, senha, email) VALUES (?, ?, ?, ?);";
+    const char *sql = "INSERT INTO usuarios (nome, senha, email) VALUES (?, ?, ?);";
     sqlite3_stmt *stmt;
 
     if (sqlite3_prepare_v2(conn, sql, -1, &stmt, nullptr) != SQLITE_OK)
     {
-        std::cerr << "Erro ao preparar statement: " << sqlite3_errmsg(conn) << std::endl;
+        std::cerr << "Erro: " << sqlite3_errmsg(conn) << std::endl;
         return false;
     }
 
-    // Vincula os parâmetros
-    sqlite3_bind_text(stmt, 1, id.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 2, nome.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 3, senha.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_bind_text(stmt, 4, email.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 1, nome.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, senha.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, email.c_str(), -1, SQLITE_TRANSIENT);
 
-    // Executa a query
     if (sqlite3_step(stmt) != SQLITE_DONE)
     {
         std::cerr << "Erro ao inserir usuário: " << sqlite3_errmsg(conn) << std::endl;
@@ -47,4 +48,27 @@ bool Usuario::salvar(Database &db)
 
     sqlite3_finalize(stmt);
     return true;
+}
+
+// Login
+bool Usuario::login(Database &db, const std::string &email, const std::string &senha)
+{
+    std::string sql = "SELECT senha FROM usuarios WHERE email = '" + email + "';";
+    bool autenticado = false;
+
+    auto callback = [](void *data, int argc, char **argv, char **colName) -> int
+    {
+        std::string senhaBanco = argv[0] ? argv[0] : "";
+        std::string *senhaInformada = static_cast<std::string *>(data);
+        if (*senhaInformada == senhaBanco)
+        {
+            *senhaInformada = "ok";
+        }
+        return 0;
+    };
+
+    std::string senhaTemp = senha;
+    db.executeWithCallback(sql, callback, &senhaTemp);
+    autenticado = (senhaTemp == "ok");
+    return autenticado;
 }
