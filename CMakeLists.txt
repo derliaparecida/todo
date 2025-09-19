@@ -9,6 +9,7 @@ set(SOURCES
     src/main.cpp
     src/models/Usuario.cpp
     src/utils/Database.cpp
+    src/controllers/UsuarioController.cpp
 )
 
 # Cria o executável
