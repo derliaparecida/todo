@@ -4,18 +4,19 @@ project(TodoApp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Adiciona os arquivos fonte
+# Adiciona os arquivos fonte: necessário ajustar conforme a estrutura do projeto
 set(SOURCES
     src/main.cpp
     src/models/Usuario.cpp
     src/utils/Database.cpp
     src/controllers/UsuarioController.cpp
+    src/views/UsuarioView.cpp
 )
 
 # Cria o executável
 add_executable(todo ${SOURCES})
 
-# Linka com a biblioteca SQLite
+# biblioteca SQLite
 find_package(SQLite3 REQUIRED)
 if(SQLite3_FOUND)
     target_include_directories(todo PRIVATE ${SQLite3_INCLUDE_DIRS})

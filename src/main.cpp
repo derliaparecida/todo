@@ -2,6 +2,7 @@
 #include "models/Usuario.hpp"
 #include "controllers/UsuarioController.hpp"
 #include "utils/Database.hpp"
+#include "views/UsuarioView.hpp"
 
 int main()
 {
@@ -28,11 +29,8 @@ int main()
     // Instancia o controller de usuário
     UsuarioController usuarioController;
 
-    // Cadastro de usuário
-    usuarioController.cadastrarUsuario(db, "bb", "1234", "bb@email.com");
-
-    // TODO: Login de usuário
-    usuarioController.loginUsuario(db, "bb@email.com", "1234");
+    // Cadstro usando view
+    UsuarioView::menu(db, usuarioController);
 
     db.close();
     return 0;
