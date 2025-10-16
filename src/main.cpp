@@ -4,25 +4,31 @@
 #include "utils/Database.hpp"
 #include "views/UsuarioView.hpp"
 
+#include <string>
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::string;
+
 int main()
 {
     // Cria ou abre o banco
     Database db("todo.db");
     if (!db.open())
     {
-        std::cerr << "Não foi possível abrir o banco." << std::endl;
+        cerr << "Não foi possível abrir o banco." << endl;
         return 1;
     }
 
     // Cria a tabela se não existir
-    std::string sql = "CREATE TABLE IF NOT EXISTS usuarios ("
-                      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                      "nome TEXT NOT NULL, "
-                      "senha TEXT NOT NULL, "
-                      "email TEXT NOT NULL);";
+    string sql = "CREATE TABLE IF NOT EXISTS usuarios ("
+                 "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                 "nome TEXT NOT NULL, "
+                 "senha TEXT NOT NULL, "
+                 "email TEXT NOT NULL);";
     if (!db.execute(sql))
     {
-        std::cerr << "Erro ao criar tabela." << std::endl;
+        cerr << "Erro ao criar tabela." << endl;
         return 1;
     }
 

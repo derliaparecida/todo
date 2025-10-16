@@ -1,17 +1,20 @@
+#include <string>
 #include "Usuario.hpp"
 #include <iostream>
 
+using std::string;
+
 // Construtor
-Usuario::Usuario(const std::string &nome,
-                 const std::string &senha,
-                 const std::string &email)
+Usuario::Usuario(const string &nome,
+                 const string &senha,
+                 const string &email)
     : nome(nome), senha(senha), email(email) {}
 
 // Getters
-std::string Usuario::getNome() const { return nome; }
-std::string Usuario::getEmail() const { return email; }
+string Usuario::getNome() const { return nome; }
+string Usuario::getEmail() const { return email; }
 
-bool Usuario::autenticar(const std::string &senhaDigitada) const
+bool Usuario::autenticar(const string &senhaDigitada) const
 {
     return senha == senhaDigitada;
 }
@@ -51,15 +54,15 @@ bool Usuario::salvar(Database &db)
 }
 
 // Login
-bool Usuario::login(Database &db, const std::string &email, const std::string &senha)
+bool Usuario::login(Database &db, const string &email, const string &senha)
 {
-    std::string sql = "SELECT senha FROM usuarios WHERE email = '" + email + "';";
+    string sql = "SELECT senha FROM usuarios WHERE email = '" + email + "';";
     bool autenticado = false;
 
     auto callback = [](void *data, int argc, char **argv, char **colName) -> int
     {
-        std::string senhaBanco = argv[0] ? argv[0] : "";
-        std::string *senhaInformada = static_cast<std::string *>(data);
+        string senhaBanco = argv[0] ? argv[0] : "";
+        string *senhaInformada = static_cast<string *>(data);
         if (*senhaInformada == senhaBanco)
         {
             *senhaInformada = "ok";
@@ -67,7 +70,7 @@ bool Usuario::login(Database &db, const std::string &email, const std::string &s
         return 0;
     };
 
-    std::string senhaTemp = senha;
+    string senhaTemp = senha;
     db.executeWithCallback(sql, callback, &senhaTemp);
     autenticado = (senhaTemp == "ok");
     return autenticado;

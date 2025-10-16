@@ -5,25 +5,27 @@
 #include <sqlite3.h>
 #include "../utils/Database.hpp"
 
+using std::string;
+
 class Usuario
 {
 private:
-    std::string nome;
-    std::string senha;
-    std::string email;
+    string nome;
+    string senha;
+    string email;
 
 public:
     // Construtor
-    Usuario(const std::string &nome, const std::string &senha, const std::string &email);
+    Usuario(const string &nome, const string &senha, const string &email);
 
     // Getters
-    std::string getNome() const;
-    std::string getEmail() const;
+    string getNome() const;
+    string getEmail() const;
 
     // Métodos
-    bool autenticar(const std::string &senha) const;
+    bool autenticar(const string &senha) const;
     bool salvar(Database &db);
-    static bool login(Database &db, const std::string &email, const std::string &senha);
+    static bool login(Database &db, const string &email, const string &senha);
 };
 
 #endif // USUARIO_HPP

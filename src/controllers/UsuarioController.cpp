@@ -1,5 +1,11 @@
 #include "UsuarioController.hpp"
 #include <iostream>
+#include <string>
+
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::string;
 
 // Realiza o cadastro de um novo usuário
 bool UsuarioController::cadastrarUsuario(
@@ -11,12 +17,12 @@ bool UsuarioController::cadastrarUsuario(
     Usuario usuario(nome, senha, email);
     if (usuario.salvar(db))
     {
-        std::cout << "Usuário cadastrado com sucesso!" << std::endl;
+        cout << "Usuário cadastrado com sucesso!" << endl;
         return true;
     }
     else
     {
-        std::cerr << "Erro ao cadastrar usuário." << std::endl;
+        cerr << "Erro ao cadastrar usuário." << endl;
         return false;
     }
 }
@@ -24,17 +30,17 @@ bool UsuarioController::cadastrarUsuario(
 // Realiza o login de um usuário
 bool UsuarioController::loginUsuario(
     Database &db,
-    const std::string &email,
-    const std::string &senha)
+    const string &email,
+    const string &senha)
 {
     if (Usuario::login(db, email, senha))
     {
-        std::cout << "Login realizado com sucesso!" << std::endl;
+        cout << "Login realizado com sucesso!" << endl;
         return true;
     }
     else
     {
-        std::cerr << "Email ou senha inválidos." << std::endl;
+        cerr << "Email ou senha inválidos." << endl;
         return false;
     }
 }
