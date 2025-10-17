@@ -1,6 +1,9 @@
 #include "UsuarioView.hpp"
 #include <iostream>
 #include <string>
+#include "../dao/TarefaDAO.hpp"
+#include "../controllers/TarefaController.hpp"
+#include "../views/TarefaView.hpp"
 
 using std::cin;
 using std::cout;
@@ -24,8 +27,18 @@ void UsuarioView::menu(Database &db, UsuarioController &controller)
             cadastrar(db, controller);
             break;
         case 2:
-            login(db, controller);
+        {
+            bool logado = login(db, controller);
+            if (logado)
+            {
+                // Mostrar menu de tarefas apenas para usuário logado
+                TarefaDAO tarefaDao(db);
+                TarefaController tarefaController(tarefaDao);
+                TarefaView tarefaView(tarefaController);
+                tarefaView.menu(); // chama menu de tarefas
+            }
             break;
+        }
         case 0:
             cout << "Saindo...\n";
             break;
@@ -50,7 +63,7 @@ void UsuarioView::cadastrar(Database &db, UsuarioController &controller)
     controller.cadastrarUsuario(db, nome, senha, email);
 }
 // para logar
-void UsuarioView::login(Database &db, UsuarioController &controller)
+bool UsuarioView::login(Database &db, UsuarioController &controller)
 {
     string email, senha;
 
@@ -59,5 +72,6 @@ void UsuarioView::login(Database &db, UsuarioController &controller)
     cout << "Digite a senha: ";
     cin >> senha;
 
-    controller.loginUsuario(db, email, senha);
+    // Retorna o resultado do controller (true = login ok)
+    return controller.loginUsuario(db, email, senha);
 }

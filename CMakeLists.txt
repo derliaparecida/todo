@@ -11,6 +11,10 @@ set(SOURCES
     src/utils/Database.cpp
     src/controllers/UsuarioController.cpp
     src/views/UsuarioView.cpp
+    src/dao/TarefaDAO.cpp
+    src/controllers/TarefaController.cpp
+    src/models/Tarefa.cpp
+    src/views/TarefaView.cpp
 )
 
 # Cria o executável

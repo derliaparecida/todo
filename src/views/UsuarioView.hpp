@@ -7,5 +7,5 @@ class UsuarioView
 public:
     static void menu(Database &db, UsuarioController &controller);
     static void cadastrar(Database &db, UsuarioController &controller);
-    static void login(Database &db, UsuarioController &controller);
+    static bool login(Database &db, UsuarioController &controller);
 };
