@@ -125,7 +125,8 @@ direction TB
 
 Bruna Oenning Amador, Derli Aparecida Machado
 
-## TODO
+## Conceitos de POO utilizados:
 
-- Utilizar sobrecarga de métodos e polimorfismo?
-- Criar testes unitários
+- Herança/Abstração: ITarefaDAO fornece uma interface (contrato) que permite substituir a implementação concreta (mais fácil p/ implementar testes).
+- Polimorfismo/Dependency Inversion: TarefaController depende da abstração, isso reduz acoplamento e melhora testabilidade.
+- Composição: Tarefa contém um Pomodoro — modelo de uma tarefa “tem um” Pomodoro, permite reutilizar a lógica de Pomodoro e manter limpa a classe Tarefa.
