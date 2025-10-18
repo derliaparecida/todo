@@ -14,6 +14,7 @@ set(SOURCES
     src/dao/TarefaDAO.cpp
     src/controllers/TarefaController.cpp
     src/models/Tarefa.cpp
+    src/models/Pomodoro.cpp
     src/views/TarefaView.cpp
 )
 

@@ -2,6 +2,7 @@
 #define TAREFA_HPP
 
 #include <string>
+#include "Pomodoro.hpp"
 
 class Tarefa
 {
@@ -13,6 +14,7 @@ private:
     int pomodoros;
     std::string prazo;
     std::string notas;
+    Pomodoro pomodoroConfig; // composição: cada tarefa contém uma configuração de Pomodoro
 
 public:
     // Construtores
@@ -40,6 +42,10 @@ public:
 
     std::string getNotas() const;
     void setNotas(const std::string &notas);
+
+    // Composição: acesso à configuração de Pomodoro
+    Pomodoro getPomodoroConfig() const;
+    void setPomodoroConfig(const Pomodoro &p);
 };
 
 #endif // TAREFA_HPP

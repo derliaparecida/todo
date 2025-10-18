@@ -2,16 +2,18 @@
 #define TAREFACONTROLLER_HPP
 
 #include "../models/Tarefa.hpp"
-#include "../dao/TarefaDAO.hpp"
+#include "../dao/ITarefaDAO.hpp"
 #include <vector>
+
+// Abstração/Dependência: controlador depende da interface ITarefaDAO
 
 class TarefaController
 {
 private:
-    TarefaDAO &dao;
+    ITarefaDAO &dao;
 
 public:
-    TarefaController(TarefaDAO &dao);
+    TarefaController(ITarefaDAO &dao);
     bool criarTarefa(const Tarefa &tarefa);
     bool atualizarTarefa(const Tarefa &t);
     bool excluirTarefa(int id);

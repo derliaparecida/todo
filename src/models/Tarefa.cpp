@@ -1,7 +1,7 @@
 #include "Tarefa.hpp"
 
-Tarefa::Tarefa() : id(0), titulo(""), grupo(""), status("pendente"), pomodoros(0), prazo(""), notas("") {}
-Tarefa::Tarefa(const std::string &titulo) : id(0), titulo(titulo), grupo(""), status("pendente"), pomodoros(0), prazo(""), notas("") {}
+Tarefa::Tarefa() : id(0), titulo(""), grupo(""), status("pendente"), pomodoros(0), prazo(""), notas(""), pomodoroConfig() {}
+Tarefa::Tarefa(const std::string &titulo) : id(0), titulo(titulo), grupo(""), status("pendente"), pomodoros(0), prazo(""), notas(""), pomodoroConfig() {}
 
 int Tarefa::getId() const { return id; }
 void Tarefa::setId(int id) { this->id = id; }
@@ -23,3 +23,6 @@ void Tarefa::setPrazo(const std::string &prazo) { this->prazo = prazo; }
 
 std::string Tarefa::getNotas() const { return notas; }
 void Tarefa::setNotas(const std::string &notas) { this->notas = notas; }
+
+Pomodoro Tarefa::getPomodoroConfig() const { return pomodoroConfig; }
+void Tarefa::setPomodoroConfig(const Pomodoro &p) { pomodoroConfig = p; }
