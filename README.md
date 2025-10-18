@@ -112,10 +112,14 @@ direction TB
 - make
 - ./todo
 
-### Compilação e execução usando VSCode
+### Compilar e execução usando VSCode
 
 - no menu: "Run and Debug":
 - clique em "Run" ou "Start Debugging" e configure os arquivos: `launch.json` e `tasks.json`
+
+### Rodar projeto usando console
+
+-
 
 ## Autores
 
@@ -123,5 +127,5 @@ Bruna Oenning Amador, Derli Aparecida Machado
 
 ## TODO
 
-- Ver vídeos sobre POO com C++
-- fazer notebookML sobre POO com C++
+- Utilizar sobrecarga de métodos e polimorfismo?
+- Criar testes unitários
